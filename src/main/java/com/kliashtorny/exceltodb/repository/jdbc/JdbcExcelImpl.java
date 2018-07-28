@@ -80,7 +80,7 @@ public class JdbcExcelImpl implements JdbcExcel {
     private String tableCreate(List<String> columnNames) {
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE " + FILEDB_TABLE + " (");
-        columnNames.stream().forEach(columnName -> sb.append(columnName + " VARCHAR(255) NOT NULL, "));
+        columnNames.forEach(columnName -> sb.append(columnName).append(" VARCHAR(255) NOT NULL, "));
         sb.replace(sb.length() - 2, sb.length(), " ");
         sb.append(");");
 
@@ -90,7 +90,7 @@ public class JdbcExcelImpl implements JdbcExcel {
     private String tableInsert(List<String> columnInsert) {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO " + FILEDB_TABLE + " VALUES(");
-        columnInsert.stream().forEach(columnConsumer -> sb.append("'" + columnConsumer + "'" + " , "));
+        columnInsert.forEach(columnConsumer -> sb.append("'").append(columnConsumer).append("'").append(" , "));
         sb.replace(sb.length() - 2, sb.length(), " ");
         sb.append(");");
 
