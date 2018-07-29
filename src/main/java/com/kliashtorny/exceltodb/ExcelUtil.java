@@ -1,8 +1,6 @@
 package com.kliashtorny.exceltodb;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,9 +17,10 @@ public class ExcelUtil {
         Row row = sheet.getRow(index);
         Iterator<Cell> cellIterator = row.cellIterator();
         cellIterator.forEachRemaining(cells::add);
-        List<String> columnValues = cells.stream().map(Cell::getStringCellValue).collect(Collectors.toList());
+        DataFormatter df = new DataFormatter();
+        List<String> cell = cells.stream().map(df::formatCellValue).collect(Collectors.toList());
 
-        return columnValues;
+        return cell;
     }
 
 }
