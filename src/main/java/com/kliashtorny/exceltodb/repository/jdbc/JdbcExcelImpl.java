@@ -1,21 +1,18 @@
 package com.kliashtorny.exceltodb.repository.jdbc;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.kliashtorny.exceltodb.repository.JdbcExcel;
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.sql.DriverManager;
+import java.util.List;
 
 import static com.kliashtorny.exceltodb.ExcelUtil.getColumnList;
 
@@ -38,9 +35,7 @@ public class JdbcExcelImpl implements JdbcExcel {
             InputStream inputStream = new BufferedInputStream(file.getInputStream());
 
             Workbook workbook = WorkbookFactory.create(inputStream);
-
             Sheet sheet = workbook.getSheetAt(0);
-
             List<String> columnValues = getColumnList(0, sheet);
             pstmt = (PreparedStatement) con.prepareStatement(DROP_TABLE);
             pstmt.execute();
@@ -62,16 +57,8 @@ public class JdbcExcelImpl implements JdbcExcel {
             pstmt.close();
             con.close();
             inputStream.close();
-        } catch (ClassNotFoundException e) {
-
-        } catch (SQLException ex) {
-
-        } catch (IOException ioe) {
-
-        } catch (EncryptedDocumentException e) {
-
-        } catch (InvalidFormatException e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return false;
