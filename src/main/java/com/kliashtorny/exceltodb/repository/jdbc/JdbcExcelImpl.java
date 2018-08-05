@@ -62,16 +62,8 @@ public class JdbcExcelImpl implements JdbcExcel {
             pstmt.close();
             con.close();
             inputStream.close();
-        } catch (ClassNotFoundException e) {
-
-        } catch (SQLException ex) {
-
-        } catch (IOException ioe) {
-
-        } catch (EncryptedDocumentException e) {
-
-        } catch (InvalidFormatException e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return false;
