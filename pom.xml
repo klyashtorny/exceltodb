@@ -14,7 +14,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <tomcat.version>8.5.24</tomcat.version>
         <spring.version>5.0.2.RELEASE</spring.version>
-        <mysql.version>5.1.38</mysql.version>
+        <mysql.version>8.0.12</mysql.version>
         <poi.version>3.17</poi.version>
     </properties>
 

@@ -1,8 +1,6 @@
 package com.kliashtorny.exceltodb.repository.jdbc;
 
 import com.kliashtorny.exceltodb.repository.JdbcExcel;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -11,10 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import static com.kliashtorny.exceltodb.ExcelUtil.getColumnList;
+import static java.sql.DriverManager.getConnection;
 
 /**
  * @author Anton Klyashtorny
@@ -24,12 +24,13 @@ public class JdbcExcelImpl implements JdbcExcel {
 
     private static final String FILEDB_TABLE = "filedb.`table`";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS `table`";
+    private static final String DRIVER = "jdbc:mysql://localhost/filedb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     public boolean insertFile(MultipartFile file) {
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/filedb", "root", "root");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = getConnection(DRIVER, "root", "root");
             con.setAutoCommit(false);
             PreparedStatement pstmt = null;
             InputStream inputStream = new BufferedInputStream(file.getInputStream());
